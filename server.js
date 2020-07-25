@@ -2,9 +2,6 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
-const { getMaxListeners } = require("process");
-const { clearLine } = require("readline");
-
 
 // Sets up the Express App
 // =============================================================
@@ -15,37 +12,37 @@ var PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Customer Questions (DATA)
+// Customer Data (DATA)
 // =============================================================
 var table = [
 {
-    customerName: Healey,  
-    phoneNumber: 1-919-555-5555, 
-    customerEmail:summer.healey@gmail.com,
+    customerName: 'Healey',  
+    phoneNumber: 9195555555, 
+    customerEmail: "summer.healey@gmail.com",
     customerID: 725001, 
 },
 {
-    customerName: Kumar, 
-    phoneNumber: 1-919-555-5555, 
-    customerEmail:suresh.kumar@gmail.com,
+    customerName: 'Kumar', 
+    phoneNumber: 9195555555, 
+    customerEmail: "suresh.kumar@gmail.com",
     customerID: 725002, 
 },
 {
-    customerName: Sims, 
+    customerName: 'Sims', 
     phoneNumber: 1-919-555-5555, 
-    customerEmail: aaron.sims@gmail.com,
+    customerEmail: "aaron.sims@gmail.com",
     customerID: 725003, 
 },
 {
-    customerName: Bartula, 
-    phoneNumber: 1-919-555-5555,  
-    customerEmail: borjan.bartula@gmail.com,
+    customerName: 'Bartula', 
+    phoneNumber: 9195555555,  
+    customerEmail: "borjan.bartula@gmail.com",
     customerID: 725004, 
 },
 {
-    customerName: Vega, 
-    phoneNumber: 1-919-555-5555,  
-    customerEmail: carl.vega@gmail.com,
+    customerName: 'Vega', 
+    phoneNumber: 9195555555,  
+    customerEmail: "carl.vega@gmail.com",
     customerID: 725005, 
 }
 ];
@@ -55,11 +52,15 @@ var table = [
 
 // Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "view.html"));
+  res.sendFile(path.join(__dirname, "home.html"));
+});
+
+app.get("/view", function(req, res) {
+  res.sendFile(path.join(__dirname, "tables.html"));
 });
 
 app.get("/add", function(req, res) {
-  res.sendFile(path.join(__dirname, "add.html"));
+  res.sendFile(path.join(__dirname, "reserveForm.html"));
 });
 
 // Displays all customers
