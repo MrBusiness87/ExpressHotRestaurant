@@ -12,8 +12,98 @@ var PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Customer Data (DATA)
+// =============================================================
+var table = [
+{
+    customerName: 'Healey',  
+    phoneNumber: 9195555555, 
+    customerEmail: "summer.healey@gmail.com",
+    customerID: 725001, 
+},
+{
+    customerName: 'Kumar', 
+    phoneNumber: 9195555555, 
+    customerEmail: "suresh.kumar@gmail.com",
+    customerID: 725002, 
+},
+{
+    customerName: 'Sims', 
+    phoneNumber: 1-919-555-5555, 
+    customerEmail: "aaron.sims@gmail.com",
+    customerID: 725003, 
+},
+{
+    customerName: 'Bartula', 
+    phoneNumber: 9195555555,  
+    customerEmail: "borjan.bartula@gmail.com",
+    customerID: 725004, 
+},
+{
+    customerName: 'Vega', 
+    phoneNumber: 9195555555,  
+    customerEmail: "carl.vega@gmail.com",
+    customerID: 725005, 
+}
+];
+
+// Routes
+// =============================================================
+
+// Basic route that sends the user first to the AJAX Page
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname, "home.html"));
+});
+
+app.get("/view", function(req, res) {
+  res.sendFile(path.join(__dirname, "tables.html"));
+});
+
+app.get("/add", function(req, res) {
+  res.sendFile(path.join(__dirname, "reserveForm.html"));
+});
+
+// Displays all customers
+app.get("/api/customers", function(req, res) {
+  return res.json(customers);
+});
+
+// Displays a single character, or returns false
+app.get("/api/customers/:customers", function(req, res) {
+  var chosen = req.params.character;
+
+  console.log(chosen);
+
+  for (var i = 0; i < customers.length; i++) {
+    if (chosen === customers[i].routeName) {
+      return res.json(customers[i]);
+    }
+  }
+
+  return res.json(false);
+});
+
+// Create New customers - takes in JSON input
+app.post("/api/customers", function(req, res) {
+  // req.body hosts is equal to the JSON post sent from the user
+  // This works because of our body parsing middleware
+  var newCustomer = req.body;
+
+  // Using a RegEx Pattern to remove spaces from newCustomer
+  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+  newCustomer.routeName = newCustomer.name.replace(/\s+/g, "").toLowerCase();
+
+  console.log(newCustomer);
+
+  customers.push(newCustomer);
+
+  res.json(newCustomer);
+});
+
 // Starts the server to begin listening
 // =============================================================
-app.listen(PORT, function () {
+app.listen(PORT, function() {
   console.log("App listening on PORT " + PORT);
 });
+
+
